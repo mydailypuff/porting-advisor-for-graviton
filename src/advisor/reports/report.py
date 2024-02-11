@@ -22,7 +22,7 @@ from .remarks.no_issues_found_remark import NoIssuesFoundRemark
 from .report_item import ReportItem
 
 class Report:
-    def __init__(self, root_directory, target_os='linux'):
+    def __init__(self, root_directory, branch, target_os='linux'):
         self.issues = []
         self.errors = []
         self.remarks = []
@@ -33,6 +33,7 @@ class Report:
         self.open_text_mode = 'w'
         self.send_filename = False
         self.self_process = False
+        self.branch_name = branch
 
     def add_source_file(self, source_file):
         self.source_files.append(source_file)
