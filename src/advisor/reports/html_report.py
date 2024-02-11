@@ -42,6 +42,7 @@ class HtmlReport(Report):
 
         directory_name = path.normpath(self.root_directory)
         branch_name = self.branch_name
+        report_status = self.report_status
         if (directory_name in ['.', './']):
             directory_name = path.basename(getcwd())
         
@@ -54,5 +55,6 @@ class HtmlReport(Report):
             report_date=report_date,
             tool_version=__version__,
             branch=branch_name,
-            items=items)
+            items=items,
+            report_status=report_status)
         output_file.write(rendered)

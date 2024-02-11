@@ -20,6 +20,11 @@
             font-weight: 300;
         }
 
+        .status-text {
+            padding-left: 5px; /* This creates space between the icon and the text */
+        }
+
+
         .header .logo {
             display: block;
             float: left;
@@ -171,6 +176,21 @@
                         <div class="section-header">Report Date:</div>
                         <div id="report-date" class="section-content">{{ report_date }}</div>
                     </div>
+
+                    <div class="section">
+                        <div class="section-header">Remarks:</div>
+                            <div class="section-content">
+                                <svg class="icon" style="margin-right: 5px;">
+                                    {% if report_status == "Clean report -  can be migrated to graviton automatically!!" %}
+                                        <use xlink:href="#positive"></use>
+                                    {% else %}
+                                        <use xlink:href="#negative"></use>
+                                    {% endif %}
+                                </svg>
+                                <span class="status-text">{{ report_status }}</span>
+                            </div>
+                    </div>
+
                 </div>
             </div>
         </div>
