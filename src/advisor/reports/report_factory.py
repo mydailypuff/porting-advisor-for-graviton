@@ -53,12 +53,12 @@ class ReportFactory:
         """ Choose an output format based on the given file name extension. """
         return ReportFactory._OUTPUT_FORMAT_FOR_EXTENSION.get(extension.lower(), None)
 
-    def createReport(self, root_directory, target_os='linux', issue_type_config=None, output_format=ReportOutputFormat.TEXT):
+    def createReport(self, root_directory, branch, savings, target_os='linux', issue_type_config=None, output_format=ReportOutputFormat.TEXT):
         match output_format:
             case ReportOutputFormat.TEXT:
                 report = TextReport(root_directory, target_os=target_os)
             case ReportOutputFormat.HTML:
-                report = HtmlReport(root_directory, target_os=target_os)
+                report = HtmlReport(root_directory, branch, savings, target_os=target_os)
             case ReportOutputFormat.CSV:
                 report = CsvReport(root_directory, target_os=target_os)
             case ReportOutputFormat.CSV_ISSUE_TYPE_COUNT_BY_FILE:

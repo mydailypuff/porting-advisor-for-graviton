@@ -20,6 +20,11 @@
             font-weight: 300;
         }
 
+        .status-text {
+            padding-left: 5px; /* This creates space between the icon and the text */
+        }
+
+
         .header .logo {
             display: block;
             float: left;
@@ -163,12 +168,46 @@
                     </div>
 
                     <div class="section">
+                        <div class="section-header">Branch:</div>
+                        <div class="section-content">{{ branch }}</div>
+                    </div>
+
+                    <div class="section">
                         <div class="section-header">Report Date:</div>
                         <div id="report-date" class="section-content">{{ report_date }}</div>
                     </div>
+
                 </div>
             </div>
         </div>
+
+        <div class='card'>
+            <div class="card-title">Remarks</div>
+            <div class="card-content">
+                <div class="card-column">
+                    <div class="section">
+                        <div class="section-header">Report Status:</div>
+                            <div class="section-content">
+                                <svg class="icon" style="margin-right: 5px;">
+                                    {% if report_status == "Clean report -  can be migrated to graviton automatically!!" %}
+                                        <use xlink:href="#positive"></use>
+                                    {% else %}
+                                        <use xlink:href="#negative"></use>
+                                    {% endif %}
+                                </svg>
+                                <span class="status-text">{{ report_status }}</span>
+                            </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-header">Potential cost savings:</div>
+                        <div class="section-content">{{ savings }}</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
 
         <div class="card">
             <div class="card-title">Results</div>

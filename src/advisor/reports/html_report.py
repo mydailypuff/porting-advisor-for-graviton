@@ -41,6 +41,9 @@ class HtmlReport(Report):
         template = env.get_template('template.html')
 
         directory_name = path.normpath(self.root_directory)
+        branch_name = self.branch_name
+        report_status = self.report_status
+        savings = self.savings
         if (directory_name in ['.', './']):
             directory_name = path.basename(getcwd())
         
@@ -52,5 +55,8 @@ class HtmlReport(Report):
             root_directory_basename=base_name,
             report_date=report_date,
             tool_version=__version__,
-            items=items)
+            branch=branch_name,
+            items=items,
+            report_status=report_status,
+            savings=savings)
         output_file.write(rendered)

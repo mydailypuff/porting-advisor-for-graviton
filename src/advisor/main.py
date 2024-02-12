@@ -96,6 +96,12 @@ def main(argv=sys.argv[1:]):
                         default='gpa.log')
     parser.add_argument('--log-to-console', action='store_true',
                         help=('log to console instead of a file'))
+    parser.add_argument('--branch',
+                        help=('enter branch to be scanned'),
+                        default='master')
+    parser.add_argument('--savings',
+                        help=('enter cost savings'),
+                        default='$100')
     args = parser.parse_args(argv)
 
     if (args.log_to_console):
@@ -127,7 +133,7 @@ def main(argv=sys.argv[1:]):
         sys.exit(1)
     args.issue_types = IssueTypeConfig(args.issue_types)
 
-    report = report_factory.createReport(args.root, target_os=args.target_os, issue_type_config=args.issue_types, output_format=args.output_format)
+    report = report_factory.createReport(args.root, branch=args.branch, savings=args.savings, target_os=args.target_os, issue_type_config=args.issue_types, output_format=args.output_format)
 
     if report.self_process:
         report.process(args)

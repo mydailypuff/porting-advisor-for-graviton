@@ -22,7 +22,7 @@ from .remarks.no_issues_found_remark import NoIssuesFoundRemark
 from .report_item import ReportItem
 
 class Report:
-    def __init__(self, root_directory, target_os='linux'):
+    def __init__(self, root_directory, branch, savings, target_os='linux'):
         self.issues = []
         self.errors = []
         self.remarks = []
@@ -33,6 +33,9 @@ class Report:
         self.open_text_mode = 'w'
         self.send_filename = False
         self.self_process = False
+        self.branch_name = branch
+        self.report_status = ''
+        self.savings = savings
 
     def add_source_file(self, source_file):
         self.source_files.append(source_file)
@@ -49,6 +52,7 @@ class Report:
 
     def write(self, output_file, report_errors=False, report_remarks=False, include_summary=False):
         items = {}
+        status_flag = 'positive'
         for item_type in ReportItem.TYPES:
             items[item_type] = []
         all_items = []
@@ -57,6 +61,15 @@ class Report:
         all_items += self.issues
         if report_errors:
             all_items += self.errors
+        for item in all_items:
+            print(item.item_type)
+            if item.item_type.lower() == 'negative':
+                status_flag = 'negative'
+                break
+        if status_flag == 'positive':
+            self.report_status = 'Clean report -  can be migrated to graviton automatically!!'
+        elif status_flag == 'negative':
+            self.report_status = 'Issues found in the repository. Should be fixed before graviton migration:('
         for item in all_items:
             items[item.item_type].append(item)
         if include_summary:
