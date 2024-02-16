@@ -44,6 +44,8 @@ class HtmlReport(Report):
         branch_name = self.branch_name
         report_status = self.report_status
         savings = self.savings
+        productname = self.productname
+        teamname = self.teamname
         if (directory_name in ['.', './']):
             directory_name = path.basename(getcwd())
         
@@ -56,6 +58,8 @@ class HtmlReport(Report):
             report_date=report_date,
             tool_version=__version__,
             branch=branch_name,
+            productname=productname,
+            teamname=teamname,
             items=items,
             report_status=report_status,
             savings=savings)
