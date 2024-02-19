@@ -32,6 +32,7 @@ from advisor import  __project__, __version__, __summary__, __webpage__
 from datetime import datetime
 from progressbar import ProgressBar, UnknownLength
 from progressbar.widgets import AnimatedMarker, Timer, Widget
+from .util.fetch_metadata import get_repomanifest_data
 
 def main(argv=sys.argv[1:]):
     default_os = os.name
@@ -101,7 +102,7 @@ def main(argv=sys.argv[1:]):
                         default='master')
     parser.add_argument('--savings',
                         help=('enter cost savings'),
-                        default='$100')
+                        default='By migrating to Graviton based instances, you will be able to achieved ~40% cost savings. For detailed cost savings, please contact FinOps team')
     parser.add_argument('--productname',
                         help=('enter product name'),
                         default='N/A')
@@ -138,8 +139,9 @@ def main(argv=sys.argv[1:]):
         print(_('%s: invalid output format') % args.output_format, file=sys.stderr)
         sys.exit(1)
     args.issue_types = IssueTypeConfig(args.issue_types)
-
-    report = report_factory.createReport(args.root, branch=args.branch, savings=args.savings, productname=args.productname, teamname=args.teamname, target_os=args.target_os, issue_type_config=args.issue_types, output_format=args.output_format)
+    manifest_path = f"{args.root}/repository-manifest.json"
+    pname, tname = get_repomanifest_data(manifest_path)
+    report = report_factory.createReport(args.root, branch=args.branch, savings=args.savings, productname=pname, teamname=tname, target_os=args.target_os, issue_type_config=args.issue_types, output_format=args.output_format)
 
     if report.self_process:
         report.process(args)
